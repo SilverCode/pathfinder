@@ -65,7 +65,7 @@ function findPathOfNode(start, destination, graph, path) {
         return true;
     }
 
-    for (child of start.c) {
+    for (let child of start.c) {
         let childNode = findNodeAtIndex(child, graph);
         if (findPathOfNode(childNode, destination, graph, path) === true) {
             return true;
