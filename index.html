@@ -2,18 +2,40 @@
 <html class="no-js" lang="">
 
 <head>
-  <meta charset="utf-8">
-  <title></title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+        body {
+            padding: 10px;
+        }
+        #main_canvas {
+            border: solid 1px black;
+        }
+
+        #output {
+            display: inline-block;
+            position: absolute;
+            border: solid 1px black;
+            background: #b3d4fc;
+            width: 800px;
+            height: 800px;
+        }
+    </style>
 </head>
 
 <body>
-  <canvas width="1920" height="1000" id="main_canvas"></canvas>
-  <script src="js/main.js"></script>
+<canvas id="main_canvas"></canvas>
+<div id="output"></div>
+<div>
+    <button onclick="doPathCalc()">Calc</button>
+</div>
+<script src="js/main.js"></script>
 </body>
 
 </html>
