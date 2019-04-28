@@ -122,10 +122,17 @@ function drawNodes(nodes, color) {
 
 function drawNodeLink(first_node, second_node) {
     ctx.beginPath();
+    let color = 'rgb(0, 0, 0)';
+
+    // Highlight the edge if it is between 2 path nodes
+    if (path_list.indexOf(first_node.i) !== -1 && path_list.indexOf(second_node.i) !== -1) {
+        color = 'rgb(0, 0, 200)';
+    }
+
     ctx.moveTo(first_node.x, first_node.y);
     ctx.lineTo(second_node.x, second_node.y);
     ctx.lineWidth = 1;
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = color;
     ctx.stroke();
 }
 
