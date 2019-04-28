@@ -15,7 +15,7 @@ ctx.font = '12px serif';
 canvas.addEventListener('mousedown', (event) => {
     let temp_node = findNodeAtPos(event.clientX, event.clientY);
 
-    if (event.button == 0) {
+    if (event.button === 0) {
         // Left Click adds node
         if (temp_node === -1) {
             // No node found where the user clicked, so add a new node
@@ -38,12 +38,12 @@ canvas.addEventListener('mousedown', (event) => {
             // to link the selected node to the one they clicked on
 
             // Make sure we don't already have the relationship between the nodes
-            if (selected_node.c.indexOf(temp_node.i) == -1) {
+            if (selected_node.c.indexOf(temp_node.i) === -1) {
                 selected_node.c.push(temp_node.i);
             }
             selected_node = temp_node;
         }
-    } else if (event.button == 2) {
+    } else if (event.button === 2) {
         // Right Click selects node
         if (temp_node !== -1) {
             selected_node = temp_node;
@@ -81,7 +81,7 @@ function findPathOfNode(start, destination, nodes) {
         const i = stack.pop();
         let node = findNodeAtIndex(i, nodes);
 
-        if (node.i == destination) {
+        if (node.i === destination) {
             let current_node = destination;
             let path = [];
             while (current_node !== start) {
@@ -108,7 +108,7 @@ function findPathOfNode(start, destination, nodes) {
 
 function drawNode(node, selected, color) {
     color = color === undefined ? 'rgb(200, 0, 0)' : color;
-    color = path_list.indexOf(node.i) == -1 ? color : 'rgb(0, 0, 200)';
+    color = path_list.indexOf(node.i) === -1 ? color : 'rgb(0, 0, 200)';
     ctx.fillStyle = selected ? 'rgb(0, 200, 0)' : color;
     ctx.fillRect(node.x - NODE_SIZE/2, node.y-NODE_SIZE/2, NODE_SIZE, NODE_SIZE);
     ctx.fillText(node.i, node.x+NODE_SIZE, node.y+NODE_SIZE/2);
