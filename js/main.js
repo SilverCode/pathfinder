@@ -149,7 +149,9 @@ function updateDisplay() {
 }
 
 function doPathCalc() {
-    path_list = findPathOfNode(4, 13, node_list);
+    const start_node = +document.getElementById('start_node').value;
+    const end_node = +document.getElementById('end_node').value;
+    path_list = findPathOfNode(start_node, end_node, node_list);
 }
 
 function save() {
@@ -163,6 +165,12 @@ function load() {
         node_list = JSON.parse(tmp);
         selected_node = node_list[0];
     }
+}
+
+function clearNodes() {
+    node_list = [];
+    path_list = [];
+    selected_node = null;
 }
 
 updateDisplay();
