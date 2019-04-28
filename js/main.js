@@ -12,29 +12,42 @@ let selected_node;
 
 ctx.font = '12px serif';
 
-node_list = JSON.parse('[{"i":0,"x":378,"y":118,"c":[1,10,21]},{"i":1,"x":352,"y":222,"c":[0,2,5]},{"i":2,"x":283,"y":311,"c":[1,3,4]},{"i":3,"x":249,"y":400,"c":[2]},{"i":4,"x":326,"y":405,"c":[2,8,9]},{"i":5,"x":423,"y":341,"c":[1,6,7]},{"i":6,"x":380,"y":371,"c":[5]},{"i":7,"x":449,"y":382,"c":[5]},{"i":8,"x":297,"y":471,"c":[4]},{"i":9,"x":370,"y":471,"c":[4]},{"i":10,"x":464,"y":217,"c":[0,11,13,16]},{"i":11,"x":441,"y":267,"c":[10,12]},{"i":12,"x":438,"y":308,"c":[11]},{"i":13,"x":508,"y":258,"c":[10,14,15]},{"i":14,"x":515,"y":299,"c":[13]},{"i":15,"x":580,"y":273,"c":[13]},{"i":16,"x":574,"y":209,"c":[10,17,18]},{"i":17,"x":592,"y":152,"c":[16,19,20]},{"i":18,"x":661,"y":264,"c":[16]},{"i":19,"x":660,"y":202,"c":[17]},{"i":20,"x":638,"y":107,"c":[17]},{"i":21,"x":280,"y":180,"c":[0,22,23]},{"i":22,"x":192,"y":154,"c":[21]},{"i":23,"x":280,"y":232,"c":[21,24]},{"i":24,"x":214,"y":268,"c":[23,25]},{"i":25,"x":152,"y":280,"c":[24,26]},{"i":26,"x":74,"y":353,"c":[25]}]');
-selected_node = node_list[0];
-
-canvas.addEventListener('click', (event) => {
+canvas.addEventListener('mousedown', (event) => {
     let temp_node = findNodeAtPos(event.clientX, event.clientY);
 
-    if (temp_node === -1) {
-        let new_node = {
-            i: node_list.length,
-            x: event.clientX - NODE_SIZE/2,
-            y: event.clientY - NODE_SIZE/2,
-            c: []
-        };
+    if (event.button == 0) {
+        // Left Click adds node
+        if (temp_node === -1) {
+            // No node found where the user clicked, so add a new node
+            let new_node = {
+                i: node_list.length,
+                x: event.clientX - NODE_SIZE / 2,
+                y: event.clientY - NODE_SIZE / 2,
+                c: []
+            };
 
-        if (selected_node) {
-            new_node.c.push(selected_node.i);
-            selected_node.c.push(new_node.i);
+            if (selected_node) {
+                new_node.c.push(selected_node.i);
+                selected_node.c.push(new_node.i);
+            }
+
+            node_list.push(new_node);
+            selected_node = new_node;
+        } else {
+            // Node was found where the user clicked, so we assume the user wanted
+            // to link the selected node to the one they clicked on
+
+            // Make sure we don't already have the relationship between the nodes
+            if (selected_node.c.indexOf(temp_node.i) == -1) {
+                selected_node.c.push(temp_node.i);
+            }
+            selected_node = temp_node;
         }
-
-        node_list.push(new_node);
-        selected_node = new_node;
-    } else {
-        selected_node = temp_node;
+    } else if (event.button == 2) {
+        // Right Click selects node
+        if (temp_node !== -1) {
+            selected_node = temp_node;
+        }
     }
 });
 
@@ -137,6 +150,19 @@ function updateDisplay() {
 
 function doPathCalc() {
     path_list = findPathOfNode(4, 13, node_list);
+}
+
+function save() {
+    localStorage.setItem('graph', JSON.stringify(node_list));
+}
+
+function load() {
+    let tmp = localStorage.getItem('graph');
+
+    if (tmp) {
+        node_list = JSON.parse(tmp);
+        selected_node = node_list[0];
+    }
 }
 
 updateDisplay();

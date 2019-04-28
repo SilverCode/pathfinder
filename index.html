@@ -30,11 +30,12 @@
 </head>
 
 <body>
-<canvas id="main_canvas"></canvas>
+<canvas id="main_canvas" oncontextmenu="return false;"></canvas>
 <div id="output"></div>
 <div>
     <button onclick="doPathCalc()">Calc</button>
-    <button onclick="dump()">dump</button>
+    <button onclick="save()">Save</button>
+    <button onclick="load()">Load</button>
 </div>
 <script src="js/main.js"></script>
 </body>
